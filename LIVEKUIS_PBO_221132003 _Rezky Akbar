@@ -1,0 +1,138 @@
+// Kelas Mesin
+class Mesin {
+    // Merek mesin
+    public static final String HONDA = "Honda";
+    public static final String SUZUKI = "Suzuki";
+    public static final String NISSAN = "Nissan";
+
+    // Kecepatan maksimum dan minimum
+    public static final int MAX_KECEPATAN = 300;
+    public static final int MIN_KECEPATAN = 0;
+
+    // Kecepatan maksimum Suzuki
+    public static final int MAX_KECEPATAN_SUZUKI = 150;
+
+    // Jenis mesin
+    private String jenis;
+    private int kecepatan;
+
+    // Status mesin
+    private boolean mesinMenyala;
+
+    // Konstruktor
+    public Mesin(String jenis) {
+        this.jenis = jenis;
+        this.kecepatan = 0;
+        this.mesinMenyala = false;
+    }
+
+    // Menyalakan mesin
+    public void nyalakanMesin() {
+        this.mesinMenyala = true;
+        System.out.println("Mesin dinyalakan");
+    }
+
+    // Matikan mesin
+    public void matikanMesin() {
+        this.mesinMenyala = false;
+        System.out.println("Mesin dimatikan");
+    }
+
+    // Tambah kecepatan
+    public void tambahKecepatan() {
+        if (mesinMenyala) {
+            if (jenis.equals(HONDA)) {
+                kecepatan += 10;
+            } else if (jenis.equals(SUZUKI)) {
+                kecepatan += 15;
+                if (kecepatan > MAX_KECEPATAN_SUZUKI) {
+                    kecepatan = MAX_KECEPATAN_SUZUKI;
+                }
+            } else if (jenis.equals(NISSAN)) {
+                kecepatan += 20;
+            }
+
+            if (kecepatan > MAX_KECEPATAN) {
+                kecepatan = MAX_KECEPATAN;
+            }
+
+            System.out.println("Kecepatan sekarang: " + kecepatan + " Km/jam");
+        } else {
+            System.out.println("Mesin belum dinyalakan. Nyalakan mesin terlebih dahulu.");
+        }
+    }
+
+    // Kurang kecepatan
+    public void kurangKecepatan() {
+        if (mesinMenyala) {
+            if (jenis.equals(HONDA)) {
+                kecepatan -= 5;
+            } else if (jenis.equals(SUZUKI)) {
+                kecepatan -= 10;
+            } else if (jenis.equals(NISSAN)) {
+                kecepatan -= 15;
+            }
+
+            if (kecepatan < MIN_KECEPATAN) {
+                kecepatan = MIN_KECEPATAN;
+            }
+
+            System.out.println("Kecepatan sekarang: " + kecepatan + " Km/jam");
+        } else {
+            System.out.println("Mesin belum dinyalakan. Nyalakan mesin terlebih dahulu.");
+        }
+    }
+}
+
+// Kelas Mobil
+class Mobil {
+    private Mesin mesin;
+
+    // Konstruktor
+    public Mobil(Mesin mesin) {
+        this.mesin = mesin;
+    }
+
+    // Nyalakan mobil
+    public void nyalakanMobil() {
+        mesin.nyalakanMesin();
+    }
+
+    // Matikan mobil
+    public void matikanMobil() {
+        mesin.matikanMesin();
+    }
+
+    // Tambah kecepatan mobil
+    public void tambahKecepatan() {
+        mesin.tambahKecepatan();
+    }
+
+    // Kurang kecepatan mobil
+    public void kurangKecepatan() {
+        mesin.kurangKecepatan();
+    }
+}
+
+// Contoh penggunaan
+public class Main {
+    public static void main(String[] args) {
+        // Membuat objek mesin dengan jenis Honda
+        Mesin mesinHonda = new Mesin(Mesin.HONDA);
+
+        // Membuat objek mobil dengan mesin Honda
+        Mobil mobilHonda = new Mobil(mesinHonda);
+
+        // Menyalakan mobil
+        mobilHonda.nyalakanMobil();
+
+        // Menambah kecepatan mobil
+        mobilHonda.tambahKecepatan();
+
+        // Mengurangi kecepatan mobil
+        mobilHonda.kurangKecepatan();
+
+        // Mematikan mobil
+        mobilHonda.matikanMobil();
+    }
+}
